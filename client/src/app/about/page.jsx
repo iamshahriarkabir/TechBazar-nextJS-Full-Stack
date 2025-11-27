@@ -46,9 +46,18 @@ export default function AboutPage() {
           >
             <motion.span
               variants={fadeInUp}
-              className="inline-block py-1 px-4 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-widest uppercase"
+              className="inline-block py-1 px-4 rounded-full bg-blue-100 backdrop-blur-md text-blue-700 text-xs font-bold tracking-widest uppercase border border-white/10"
             >
-              Our Story
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full ">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-500 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
+                </span>
+                <span className="text-xs font-bold tracking-widest uppercase text-transparent bg-clip-text bg-linear-to-r from-blue-400 via-indigo-400 to-purple-400 animate-gradient-x">
+                  Ends in 24 Hours
+                </span>
+              </div>
             </motion.span>
 
             <motion.h1
@@ -150,7 +159,7 @@ export default function AboutPage() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center"
           >
             {statsData.map((stat, idx) => (
               <motion.div
@@ -185,14 +194,14 @@ export default function AboutPage() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
             {features.map((feature, idx) => (
               <motion.div
                 key={idx}
                 variants={fadeInUp}
                 whileHover={{ y: -10 }}
-                // 🔥 আপডেট: বর্ডার এবং হোভার ইফেক্ট ঠিক করা হয়েছে
+                
                 className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group"
               >
                 <div
