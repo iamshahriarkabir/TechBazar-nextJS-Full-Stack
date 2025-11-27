@@ -76,7 +76,7 @@ export default function Navbar() {
         className={`fixed top-0 w-full z-50 transition-all duration-300 shadow-sm
           ${
             isScrolled
-              ? "bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100"
+              ? "bg-white/50 backdrop-blur-md shadow-md "
               : "bg-white md:bg-white/80"
           }
         `}
@@ -87,7 +87,7 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="md:hidden p-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition border border-gray-200"
+                className="md:hidden p-1 rounded-lg bg-transparent text-blue-600 hover:bg-gray-200 transition border border-blue-600"
               >
                 <Menu size={24} />
               </button>
@@ -96,7 +96,7 @@ export default function Navbar() {
                 <div className="bg-blue-600 p-1.5 rounded-lg text-white">
                   <ShoppingBag size={20} />
                 </div>
-                <span className="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
+                <span className="text-xl md:text-2xl font-extrabold bg-linear-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
                   TechBazar
                 </span>
               </Link>
@@ -239,7 +239,7 @@ export default function Navbar() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setMobileMenuOpen(false)}
-                className="fixed inset-0 bg-black/60 z-[60] md:hidden backdrop-blur-sm"
+                className="fixed inset-0 h-screen backdrop-blur-sm bg-black/70 z-[60] md:hidden "
               />
               <motion.div
                 initial={{ x: "-100%" }}
@@ -252,7 +252,7 @@ export default function Navbar() {
                   <span className="text-xl font-bold text-gray-800">Menu</span>
                   <button
                     onClick={() => setMobileMenuOpen(false)}
-                    className="p-2 bg-white border border-gray-200 rounded-full"
+                    className="p-2 bg-white border border-gray-200 rounded-lg"
                   >
                     <X size={20} />
                   </button>
@@ -270,7 +270,7 @@ export default function Navbar() {
                     </Link>
                   ))}
 
-                  {!session && (
+                  {/* {!session && (
                     <div className="pt-6 border-t border-gray-100 mt-4">
                       <button
                         onClick={() => {
@@ -282,7 +282,7 @@ export default function Navbar() {
                         Login / Register
                       </button>
                     </div>
-                  )}
+                  )} */}
                 </div>
 
                 <div className="p-4 bg-gray-50 text-xs text-center text-gray-400 border-t border-gray-100">
