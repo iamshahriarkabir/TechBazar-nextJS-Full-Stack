@@ -87,7 +87,7 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="md:hidden p-1 rounded-lg bg-transparent text-blue-600 hover:bg-gray-200 transition border border-blue-600"
+                className="md:hidden p-0.5 rounded-lg hover:bg-gray-200 transition border border-gray-600 text-gray-600"
               >
                 <Menu size={24} />
               </button>
@@ -96,8 +96,8 @@ export default function Navbar() {
                 <div className="bg-blue-600 p-1.5 rounded-lg text-white">
                   <ShoppingBag size={20} />
                 </div>
-                <span className="text-xl md:text-2xl font-extrabold bg-linear-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
-                  TechBazar
+                <span className="text-xl md:text-2xl font-extrabold ">
+                  <span className="text-gray-800">Tech</span><span className="bg-linear-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">Bazar</span>
                 </span>
               </Link>
             </div>
@@ -239,7 +239,7 @@ export default function Navbar() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setMobileMenuOpen(false)}
-                className="fixed inset-0 h-screen backdrop-blur-sm bg-black/70 z-[60] md:hidden "
+                className="fixed inset-0 h-screen bg-black/70 z-[60] md:hidden "
               />
               <motion.div
                 initial={{ x: "-100%" }}
