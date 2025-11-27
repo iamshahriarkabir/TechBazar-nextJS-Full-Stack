@@ -46,5 +46,4 @@ This directory contains the backend REST API for TechBazar, built with **Express
 - `description`: String (Required)
 - `image`: String (URL)
 - `timestamps`: CreatedAt / UpdatedAt
-```
 

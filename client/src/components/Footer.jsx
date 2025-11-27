@@ -100,6 +100,8 @@ export default function Footer() {
           <p>
             &copy; {new Date().getFullYear()} TechBazar. All rights reserved.
           </p>
+
+          <span className=" mt-4 md:mt-0">Design & Developed by ❤️ Z4Code</span>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <span className="hover:text-white cursor-pointer transition">
               Privacy

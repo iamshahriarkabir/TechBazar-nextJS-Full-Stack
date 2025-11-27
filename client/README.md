@@ -42,4 +42,3 @@ This directory contains the frontend application for TechBazar, built with **Nex
 - **Glassmorphism Hero Section:** Modern visual appeal.
 - **Off-canvas Cart:** Smooth slide-in cart drawer.
 - **Admin Dashboard:** Protected route for product management with Modal forms.
-```

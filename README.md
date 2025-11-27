@@ -59,4 +59,3 @@ npm run dev
 
 ## 👨‍💻 Developer
 Developed by **[Shahriar Kabir (Zafor)]**.
-```
