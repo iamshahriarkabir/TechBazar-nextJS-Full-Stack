@@ -4,8 +4,8 @@ TechBazar is a robust eCommerce platform built with a decoupled architecture. It
 
 ## 🚀 Live Demo
 
-- **Frontend (Vercel):** [তোমার Vercel লাইভ লিংক এখানে বসাও]
-- **Backend API (Render):** [তোমার Render লাইভ লিংক এখানে বসাও]
+- **Frontend (Vercel):** [https://techbazar-woad.vercel.app]
+- **Backend API (Render):** [https://techbazar-server.vercel.app]
 
 ---
 

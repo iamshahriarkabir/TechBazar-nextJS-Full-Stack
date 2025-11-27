@@ -48,4 +48,3 @@ This directory contains the backend REST API for TechBazar, built with **Express
 - `timestamps`: CreatedAt / UpdatedAt
 ```
 
----
