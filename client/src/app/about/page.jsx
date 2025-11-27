@@ -62,7 +62,7 @@ export default function AboutPage() {
 
             <motion.h1
               variants={fadeInUp}
-              className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight"
+              className="text-4xl md:text-6xl font-bold text-gray-900 tracking-tight leading-tight"
             >
               Empowering Your <br />
               <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600">

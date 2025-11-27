@@ -54,11 +54,13 @@ export default function ContactPage() {
         </motion.p>
       </div>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
         {/* --- LEFT SIDE: Contact Info & Map --- */}
-        <div className="space-y-8 lg:col-span-1">
-          {/* Info Cards */}
-          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 space-y-8">
+        <div className="space-y-8 lg:col-span-5">
+
+          <div className="flex flex-col md:flex-row lg:flex-col gap-10">
+            {/* Info Cards */}
+          <div className="flex-1 bg-white rounded-2xl p-8 shadow-sm border border-gray-100 space-y-8">
             {/* Phone */}
             <div className="flex items-start gap-4">
               <div className="p-3 bg-blue-50 text-blue-600 rounded-lg">
@@ -115,7 +117,7 @@ export default function ContactPage() {
           </div>
 
           {/* Quick Chat Box */}
-          <div className="bg-linear-to-br from-blue-600 to-indigo-700 rounded-2xl p-8 text-white shadow-lg relative overflow-hidden">
+          <div className="flex-1 bg-linear-to-br from-blue-600 to-indigo-700 rounded-2xl p-8 text-white shadow-lg relative overflow-hidden">
             <div className="relative z-10">
               <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
                 <MessageSquare size={20} /> Live Chat
@@ -130,6 +132,8 @@ export default function ContactPage() {
             {/* Decoration */}
             <div className="absolute top-[-20%] right-[-20%] w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
           </div>
+          </div>
+          
         </div>
 
         {/* --- RIGHT SIDE: Contact Form --- */}
@@ -137,7 +141,7 @@ export default function ContactPage() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
-          className="lg:col-span-2"
+          className="lg:col-span-7"
         >
           <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 md:p-10">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">

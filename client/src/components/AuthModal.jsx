@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 export default function AuthModal({ isOpen, onClose }) {
-  const [mode, setMode] = useState("login"); 
+  const [mode, setMode] = useState("login");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -43,18 +43,18 @@ export default function AuthModal({ isOpen, onClose }) {
         const data = await res.json();
 
         if (!res.ok) throw new Error(data.message || "Registration failed");
-        
+
         toast.success("Account created! Logging you in...");
-        
+
         // auto login
         await signIn("credentials", {
           email: formData.email,
           password: formData.password,
           redirect: false,
         });
-        
-        onClose(); 
-        router.refresh(); 
+
+        onClose();
+        router.refresh();
       } else {
         // --- LOGIN LOGIC ---
         const result = await signIn("credentials", {
@@ -88,7 +88,7 @@ export default function AuthModal({ isOpen, onClose }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] px-4"
           />
 
           {/* Modal Card */}
@@ -99,7 +99,7 @@ export default function AuthModal({ isOpen, onClose }) {
             className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white rounded-3xl shadow-2xl z-[101] overflow-hidden border border-gray-100 p-6 md:p-8"
           >
             {/* Close Button */}
-            <button 
+            <button
               onClick={onClose}
               className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition"
             >
@@ -112,23 +112,31 @@ export default function AuthModal({ isOpen, onClose }) {
                 {mode === "login" ? "Welcome Back" : "Join TechBazar"}
               </h2>
               <p className="text-sm text-gray-500 mb-6">
-                {mode === "login" ? "Access your account & orders" : "Start your tech journey today"}
+                {mode === "login"
+                  ? "Access your account & orders"
+                  : "Start your tech journey today"}
               </p>
 
               {/* Tab Switcher */}
               <div className="bg-gray-100 p-1 rounded-xl inline-flex relative">
-                <div 
-                   className={`absolute top-1 bottom-1 w-1/2 bg-white rounded-lg shadow-sm transition-all duration-300 ${mode === "login" ? "left-1" : "left-[48.5%]"}`}
+                <div
+                  className={`absolute top-1 bottom-1 w-1/2 bg-white rounded-lg shadow-sm transition-all duration-300 ${
+                    mode === "login" ? "left-1" : "left-[48.5%]"
+                  }`}
                 ></div>
-                <button 
+                <button
                   onClick={() => switchMode("login")}
-                  className={`relative z-10 px-6 py-2 text-sm font-bold transition ${mode === "login" ? "text-blue-600" : "text-gray-500"}`}
+                  className={`relative z-10 px-6 py-2 text-sm font-bold transition ${
+                    mode === "login" ? "text-blue-600" : "text-gray-500"
+                  }`}
                 >
                   Log In
                 </button>
-                <button 
+                <button
                   onClick={() => switchMode("register")}
-                  className={`relative z-10 px-6 py-2 text-sm font-bold transition ${mode === "register" ? "text-blue-600" : "text-gray-500"}`}
+                  className={`relative z-10 px-6 py-2 text-sm font-bold transition ${
+                    mode === "register" ? "text-blue-600" : "text-gray-500"
+                  }`}
                 >
                   Sign Up
                 </button>
@@ -137,42 +145,56 @@ export default function AuthModal({ isOpen, onClose }) {
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
-              
               {mode === "register" && (
                 <div className="relative">
-                  <User className="absolute left-3 top-3.5 text-gray-400" size={18} />
+                  <User
+                    className="absolute left-3 top-3.5 text-gray-400"
+                    size={18}
+                  />
                   <input
                     type="text"
                     placeholder="Full Name"
                     required
                     className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition text-sm"
                     value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                   />
                 </div>
               )}
 
               <div className="relative">
-                <Mail className="absolute left-3 top-3.5 text-gray-400" size={18} />
+                <Mail
+                  className="absolute left-3 top-3.5 text-gray-400"
+                  size={18}
+                />
                 <input
                   type="email"
                   placeholder="Email Address"
                   required
                   className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition text-sm"
                   value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                 />
               </div>
 
               <div className="relative">
-                <Lock className="absolute left-3 top-3.5 text-gray-400" size={18} />
+                <Lock
+                  className="absolute left-3 top-3.5 text-gray-400"
+                  size={18}
+                />
                 <input
                   type="password"
                   placeholder="Password"
                   required
                   className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none transition text-sm"
                   value={formData.password}
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                 />
               </div>
 
@@ -185,7 +207,7 @@ export default function AuthModal({ isOpen, onClose }) {
                   <Loader2 className="animate-spin" size={20} />
                 ) : (
                   <>
-                    {mode === "login" ? "Sign In" : "Create Account"} 
+                    {mode === "login" ? "Sign In" : "Create Account"}
                     <ArrowRight size={18} />
                   </>
                 )}
@@ -193,20 +215,27 @@ export default function AuthModal({ isOpen, onClose }) {
             </form>
 
             <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200"></div></div>
-              <div className="relative flex justify-center text-xs"><span className="px-2 bg-white text-gray-500">Or continue with</span></div>
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200"></div>
+              </div>
+              <div className="relative flex justify-center text-xs">
+                <span className="px-2 bg-white text-gray-500">
+                  Or continue with
+                </span>
+              </div>
             </div>
 
             <button
-               onClick={() => signIn("google")}
-               className="w-full flex items-center justify-center gap-3 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition text-sm font-medium text-gray-700"
+              onClick={() => signIn("google")}
+              className="w-full flex items-center justify-center gap-3 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition text-sm font-medium text-gray-700"
             >
-              <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="h-5 w-5" alt="Google" />
+              <img
+                src="https://www.svgrepo.com/show/475656/google-color.svg"
+                className="h-5 w-5"
+                alt="Google"
+              />
               Sing In With Google
             </button>
-            
-            
-
           </motion.div>
         </>
       )}
