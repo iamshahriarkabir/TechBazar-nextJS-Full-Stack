@@ -16,7 +16,7 @@ import {
 //  Express Server input
 async function getTrendingProducts() {
   try {
-    // এই URL টা .env.local থেকে আসবে (http://localhost:5000/api)
+    
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
       cache: "no-store",
     });
@@ -69,7 +69,7 @@ export default async function Home() {
                 <Link
                   href={`/products?category=${cat}`}
                   key={cat}
-                  className="flex-shrink-0 px-6 py-3 rounded-xl bg-gray-50 border border-gray-100 text-gray-700 font-medium hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md text-center transform-gpu"
+                  className="shrink-0 px-6 py-3 rounded-xl bg-gray-50 border border-gray-100 text-gray-700 font-medium hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md text-center transform-gpu"
                 >
                   {cat}
                 </Link>
@@ -82,7 +82,7 @@ export default async function Home() {
       {/* 3. Trending Products Section */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn>
-          <div className="flex flex-col sm:flex-row justify-between items-end mb-12 gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center sm:items-end mb-12 gap-4">
             <div>
               <div className="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
                 Don't Miss Out
