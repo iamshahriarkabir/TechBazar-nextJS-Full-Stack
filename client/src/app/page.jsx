@@ -144,12 +144,13 @@ export default async function Home() {
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* --- LEFT SIDE: Content --- */}
               <div className="text-center lg:text-left space-y-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-yellow-400 mb-2">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 mb-2">
                   <span className="relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-500 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
                   </span>
-                  <span className="text-xs font-bold tracking-widest uppercase">
+                  <span className="text-xs font-bold tracking-widest uppercase text-transparent bg-clip-text bg-linear-to-r from-blue-400 via-indigo-400 to-purple-400 animate-gradient-x">
                     Ends in 24 Hours
                   </span>
                 </div>
