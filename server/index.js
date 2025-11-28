@@ -90,7 +90,7 @@ async function run() {
       }
     });
 
-    // 3. Add Product (Owner Email Save করা হবে)
+    // 3. Add Product (Owner Email Save)
     app.post("/api/products", async (req, res) => {
       try {
         const { userEmail, ...productData } = req.body; 
