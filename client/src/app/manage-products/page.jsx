@@ -15,6 +15,7 @@ import {
   Search,
   CheckCircle,
   XCircle,
+  Lock 
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -30,7 +31,7 @@ export default function ManageProductsPage() {
   // authentication check
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/login");
+      router.push("/");
     }
   }, [status, router]);
 
@@ -69,35 +70,51 @@ export default function ManageProductsPage() {
     p.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?"))
+  
+  const handleDelete = async (product) => {
+    
+    if (product.userEmail && product.userEmail !== session?.user?.email) {
+      toast.error("Permission Denied: You didn't add this product!");
       return;
+    }
+
+    if (!window.confirm("Are you sure you want to delete this product?")) return;
 
     try {
+      
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/products/${product._id}?email=${session?.user?.email}`,
         { method: "DELETE" }
       );
+
       if (res.ok) {
-        setProducts(products.filter((p) => p._id !== id));
+        setProducts(products.filter((p) => p._id !== product._id));
         toast.success("Product deleted! 🗑️");
       } else {
-        toast.error("Failed to delete");
+        const data = await res.json();
+        toast.error(data.message || "Failed to delete");
       }
     } catch (error) {
       toast.error("Something went wrong");
     }
   };
 
+  
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
+      // currentUserEmail 
+      const updateData = {
+        ...editingProduct,
+        currentUserEmail: session?.user?.email 
+      };
+
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/products/${editingProduct._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(editingProduct),
+          body: JSON.stringify(updateData),
         }
       );
 
@@ -109,7 +126,8 @@ export default function ManageProductsPage() {
         setEditingProduct(null);
         toast.success("Product updated successfully! ✅");
       } else {
-        toast.error("Failed to update");
+        const data = await res.json();
+        toast.error(data.message || "Failed to update");
       }
     } catch (error) {
       toast.error("Update failed");
@@ -119,6 +137,7 @@ export default function ManageProductsPage() {
   return (
     <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
+        
         {/* --- Header & Stats --- */}
         <div className="mb-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
@@ -161,6 +180,7 @@ export default function ManageProductsPage() {
 
         {/* --- Product Table Section --- */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          
           {/* Table Toolbar */}
           <div className="p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
             <h2 className="text-xl font-bold text-gray-800">Product List</h2>
@@ -184,88 +204,94 @@ export default function ManageProductsPage() {
             <table className="min-w-full divide-y divide-gray-100">
               <thead className="bg-gray-50/50">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Product
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Category
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Price
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Product</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Category</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Price</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 bg-white">
-                {filteredProducts.map((product) => (
-                  <motion.tr
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    key={product._id}
-                    className="hover:bg-gray-50/50 transition-colors"
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="h-12 w-12 shrink-0 rounded-lg overflow-hidden border border-gray-100 bg-gray-50">
-                          <img
-                            className="h-full w-full object-cover"
-                            src={product.image || product.imageUrl}
-                            alt=""
-                          />
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-bold text-gray-900 line-clamp-1 w-48">
-                            {product.title}
+                {filteredProducts.map((product) => {
+                  
+                  const isOwner = !product.userEmail || product.userEmail === session?.user?.email;
+
+                  return (
+                    <motion.tr
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      key={product._id}
+                      className="hover:bg-gray-50/50 transition-colors"
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="h-12 w-12 shrink-0 rounded-lg overflow-hidden border border-gray-100 bg-gray-50">
+                            <img
+                              className="h-full w-full object-cover"
+                              src={product.image || product.imageUrl}
+                              alt=""
+                            />
                           </div>
-                          <div className="text-xs text-gray-500">
-                            ID: {product._id.slice(-6)}
+                          <div className="ml-4">
+                            <div className="text-sm font-bold text-gray-900 line-clamp-1 w-48">
+                              {product.title}
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              
+                              {isOwner ? `ID: ${product._id.slice(-6)}` : <span className="text-orange-500 flex items-center gap-1"><Lock size={10}/> Read Only</span>}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-50 text-blue-700 border border-blue-100">
-                        {product.category}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-700">
-                      ${product.price}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {/* Stock Status Logic */}
-                      {product.inStock !== false ? (
-                        <span className="flex items-center gap-1 text-green-600 text-xs font-bold bg-green-50 px-2 py-1 rounded-full w-max">
-                          <CheckCircle size={12} /> In Stock
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-50 text-blue-700 border border-blue-100">
+                          {product.category}
                         </span>
-                      ) : (
-                        <span className="flex items-center gap-1 text-red-600 text-xs font-bold bg-red-50 px-2 py-1 rounded-full w-max">
-                          <XCircle size={12} /> Out of Stock
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <button
-                        onClick={() => setEditingProduct(product)}
-                        className="text-indigo-600 hover:text-indigo-900 p-2 hover:bg-indigo-50 rounded-lg transition mr-2"
-                        title="Edit"
-                      >
-                        <Pencil size={18} />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(product._id)}
-                        className="text-red-500 hover:text-red-700 p-2 hover:bg-red-50 rounded-lg transition"
-                        title="Delete"
-                      >
-                        <Trash2 size={18} />
-                      </button>
-                    </td>
-                  </motion.tr>
-                ))}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-700">
+                        ${product.price}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {product.inStock !== false ? (
+                          <span className="flex items-center gap-1 text-green-600 text-xs font-bold bg-green-50 px-2 py-1 rounded-full w-max">
+                            <CheckCircle size={12} /> In Stock
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-1 text-red-600 text-xs font-bold bg-red-50 px-2 py-1 rounded-full w-max">
+                            <XCircle size={12} /> Out of Stock
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        
+                        
+                        {isOwner ? (
+                          <>
+                            <button
+                              onClick={() => setEditingProduct(product)}
+                              className="text-indigo-600 hover:text-indigo-900 p-2 hover:bg-indigo-50 rounded-lg transition mr-2"
+                              title="Edit"
+                            >
+                              <Pencil size={18} />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(product)}
+                              className="text-red-500 hover:text-red-700 p-2 hover:bg-red-50 rounded-lg transition"
+                              title="Delete"
+                            >
+                              <Trash2 size={18} />
+                            </button>
+                          </>
+                        ) : (
+                          <span className="text-gray-400 text-xs italic cursor-not-allowed">
+                            Permission Denied
+                          </span>
+                        )}
+
+                      </td>
+                    </motion.tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -277,7 +303,7 @@ export default function ManageProductsPage() {
           )}
         </div>
 
-        {/* --- EDIT MODAL (Updated) --- */}
+        {/* --- EDIT MODAL --- */}
         {editingProduct && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] px-4">
             <motion.div
@@ -357,7 +383,7 @@ export default function ManageProductsPage() {
                   </div>
                 </div>
 
-                {/* 🔥 NEW: Stock Status */}
+                {/* Stock Status */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Availability
@@ -377,7 +403,7 @@ export default function ManageProductsPage() {
                   </select>
                 </div>
 
-                {/* 🔥 NEW: Description */}
+                {/* Description */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Description

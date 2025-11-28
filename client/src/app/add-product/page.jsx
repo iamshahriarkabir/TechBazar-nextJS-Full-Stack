@@ -19,7 +19,7 @@ export default function AddProductPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // From Data
+  // Form Data
   const [formData, setFormData] = useState({
     title: "",
     price: "",
@@ -31,7 +31,7 @@ export default function AddProductPage() {
   // authentication check
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/login");
+      router.push("/");
     }
   }, [status, router]);
 
@@ -43,12 +43,12 @@ export default function AddProductPage() {
     );
   }
 
-  // Submit
+  // Submit Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // validation
+    // Basic validation
     if (!formData.category) {
       toast.error("Please select a category");
       setIsSubmitting(false);
@@ -56,10 +56,15 @@ export default function AddProductPage() {
     }
 
     try {
+      const payload = {
+        ...formData,
+        userEmail: session?.user?.email, 
+      };
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       if (res.ok) {
@@ -67,7 +72,8 @@ export default function AddProductPage() {
         router.push("/products");
         router.refresh();
       } else {
-        toast.error("Failed to add product.");
+        const data = await res.json();
+        toast.error(data.message || "Failed to add product.");
       }
     } catch (error) {
       console.error(error);
@@ -86,6 +92,7 @@ export default function AddProductPage() {
   return (
     <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
+        
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
@@ -107,6 +114,7 @@ export default function AddProductPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
           {/* --- LEFT SIDE: The Form --- */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -114,6 +122,7 @@ export default function AddProductPage() {
             className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 p-8"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
+              
               {/* Title */}
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">
