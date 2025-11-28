@@ -17,7 +17,7 @@ import {
   XCircle,
   Lock 
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, number } from "framer-motion";
 
 export default function ManageProductsPage() {
   const { data: session, status } = useSession();
@@ -63,7 +63,7 @@ export default function ManageProductsPage() {
   }
 
   const totalProducts = products.length;
-  const totalValue = products.reduce((acc, curr) => acc + curr.price, 0);
+  const totalValue = products.reduce((acc, curr) => acc + Number(curr.price), 0);
   const categoriesCount = [...new Set(products.map((p) => p.category))].length;
 
   const filteredProducts = products.filter((p) =>
