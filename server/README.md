@@ -5,7 +5,7 @@ This directory contains the backend REST API for TechBazar, built with **Express
 ## 🛠️ Technologies
 - **Runtime:** Node.js
 - **Framework:** Express.js
-- **Database:** MongoDB (Mongoose ODM)
+- **Database:** MongoDB
 - **Middleware:** CORS, Dotenv
 
 ## ⚙️ Installation & Setup
