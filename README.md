@@ -16,7 +16,7 @@ The repository is divided into two distinct directories:
 | Directory | Description | Tech Stack |
 | :--- | :--- | :--- |
 | **`/client`** | The frontend user interface and client-side logic. | Next.js (App Router), Tailwind CSS, Framer Motion, NextAuth.js |
-| **`/server`** | The RESTful API and database management logic. | Express.js, MongoDB, Mongoose, CORS |
+| **`/server`** | The RESTful API and database management logic. | Express.js, MongoDB, CORS |
 
 ---
 
